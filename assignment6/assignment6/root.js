@@ -1,24 +1,64 @@
-// root.js
-
-function PublicBlogPost() {
-
+function Header({ title, tagline }) {
+  return (
+    <header>
+      <h1>{title}</h1>
+      <p>{tagline}</p>
+    </header>
+  );
 }
 
-function PrivateBlogPost() {
-
+function BlogPost({ title, author, date, content }) {
+  return (
+    <div className="blog-post">
+      <h2>{title}</h2>
+      <p className="meta">
+        By {author} on {date}
+      </p>
+      <p>{content}</p>
+    </div>
+  );
 }
 
-function BlogList() {
-
+function PrivateBlogPost({ title, author, date }) {
+  return (
+    <div className="private-posts">
+      <h2>{title}</h2>
+      <p className="meta">
+        By {author} on {date}
+      </p>
+      <p>The content of this post is private</p>
+    </div>
+  );
 }
 
-function Header() {
-
+function BlogList({ posts }) {
+  return (
+    <div className="blog-list">
+      {posts.map((post, index) =>
+        post.private ? (
+          <PrivateBlogPost
+            key={index}
+            title={post.title}
+            author={post.author}
+            date={post.date}
+          />
+        ) : (
+          <BlogPost
+            key={index}
+            title={post.title}
+            author={post.author}
+            date={post.date}
+            content={post.content}
+          />
+        )
+      )}
+    </div>
+  );
 }
 
-function Footer() {
-
-};
+function Footer({ year }) {
+  return <footer>&copy; {year} My Blog, All rights reserved.</footer>;
+}
 
 function App() {
   const blogPosts = [
@@ -59,8 +99,17 @@ function App() {
     }
   ];
 
-};
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <div>
+      <Header title="My Blog" tagline="A blog about everything" />
+      <BlogList posts={blogPosts} />
+      <Footer year={currentYear} />
+    </div>
+  );
+}
 
 const domContainer = document.getElementById('root');
 const root = ReactDOM.createRoot(domContainer);
-root.render(<App />)
+root.render(<App />);
