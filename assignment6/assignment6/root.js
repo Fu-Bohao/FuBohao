@@ -1,13 +1,4 @@
-function Header({ title, tagline }) {
-  return (
-    <header>
-      <h1>{title}</h1>
-      <p>{tagline}</p>
-    </header>
-  );
-}
-
-function BlogPost({ title, author, date, content }) {
+function PublicBlogPost({ title, author, date, content }) {
   return (
     <div className="blog-post">
       <h2>{title}</h2>
@@ -43,7 +34,7 @@ function BlogList({ posts }) {
             date={post.date}
           />
         ) : (
-          <BlogPost
+          <PublicBlogPost
             key={index}
             title={post.title}
             author={post.author}
@@ -53,6 +44,15 @@ function BlogList({ posts }) {
         )
       )}
     </div>
+  );
+}
+
+function Header({ title, tagline }) {
+  return (
+    <header>
+      <h1>{title}</h1>
+      <p>{tagline}</p>
+    </header>
   );
 }
 
